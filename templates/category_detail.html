@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        {% for shop in category.shops %}
+        <div class="col-sm-4">
+            <div class="caption">
+                <a href="{% url "shop:shop_detail" shop.pk %}">
+                    {{ shop.name }}
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
