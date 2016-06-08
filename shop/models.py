@@ -29,7 +29,7 @@ class Review(models.Model):
     shop = models.ForeignKey(Shop, related_name='reviews')
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     message = models.TextField()
-    photo = models.ImageField(null=True)
+    photo = models.ImageField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

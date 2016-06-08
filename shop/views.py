@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import Shop, Category, Review
 from .forms import ShopForm, CategoryForm, ReviewForm
+from django.contrib.admin.views.decorators import staff_member_required
 
 
 def index(request):
@@ -13,6 +14,8 @@ def index(request):
         'review_list':review_list,
     })
 
+@staff_member_required
+@login_required
 def category_new(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -27,6 +30,8 @@ def category_new(request):
         'form':form,
     })
 
+@staff_member_required
+@login_required
 def category_edit(request, pk):
     category = get_object_or_404(Category, pk=pk)
 
@@ -43,6 +48,7 @@ def category_edit(request, pk):
     return render(request, 'category_form.html', {
         'form':form,
     })
+
 def category_detail(request, pk):
     category = get_object_or_404(Category, pk=pk)
     return render(request, 'category_detail.html', {
@@ -68,6 +74,8 @@ def shop_new(request):
 @login_required
 def shop_edit(request, pk):
     shop = get_object_or_404(Shop, pk=pk)
+    if request.user is not shop.user:
+        return redirect('shop:shop_detail', shop.pk)
     if reqeust.method == 'POST':
         form = ShopForm(request.POST, instance = shop)
         if form.is_valid():
@@ -97,7 +105,7 @@ def review_new(request, shop_pk):
             review.shop = get_object_or_404(Shop, pk=shop_pk)
             review.user = request.user
             review.save()
-            messages.succes(reqeust, 'you make a new review')
+            messages.success(request, 'you make a new review')
             return redirect('shop:shop_detail', shop_pk)
     else:
         form = ReviewForm()
@@ -108,7 +116,8 @@ def review_new(request, shop_pk):
 @login_required
 def review_edit(request, shop_pk ,pk):
     review = get_object_or_404(Review, pk=pk)
-
+    if review.user is not request.user:
+        return redirect('shop:shop_detail', shop_pk)
     if request.method == 'POST':
         form = ReviewForm(request.POST, instance=review)
         if form.is_valid():
@@ -123,17 +132,28 @@ def review_edit(request, shop_pk ,pk):
         'form':form,
     })
 
+@staff_member_required
+@login_required
 def category_delete(request, pk):
     category = get_object_or_404(Category, pk=pk)
     category.delete()
+    category.save()
     return redirect('shop:index')
 
+@login_required
 def shop_delete(request, pk):
     shop = get_object_or_404(Shop, pk=pk)
+    if shop.user is not reqeust.user:
+        return redirect('shop:index')
     shop.delete()
+    shop.save()
     return redirect('shop:index')
 
+@login_required
 def review_delete(request, shop_pk, pk):
     review = get_object_or_404(Review, pk=pk)
+    if review.user is not request.user:
+        return redirect('shop:index')
     review.delete()
+    review.save()
     return redirect('shop:shop_detail', shop_pk)
