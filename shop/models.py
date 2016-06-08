@@ -8,7 +8,7 @@ class Category(models.Model):
 
 class Shop(models.Model):
     category = models.ForeignKey(Category, related_name='shops')
-    user = models.ForeignKey(settigns.AUTH_USER_MODEL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     name = models.CharField(max_length=40)
     phone = models.CharField(max_length=12)
     location = models.CharField(max_length=100)
