@@ -7,7 +7,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('accounts.urls')),
-    url(r'^shop/', include('blog.urls', namespace='shop')),
+    url(r'^shop/', include('shop.urls', namespace='shop')),
     url(r'^$', lambda request: redirect('/shop/')),
 ]
 
