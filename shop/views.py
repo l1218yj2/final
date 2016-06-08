@@ -74,9 +74,9 @@ def shop_new(request):
 @login_required
 def shop_edit(request, pk):
     shop = get_object_or_404(Shop, pk=pk)
-    if request.user is not shop.user:
+    if request.user.id is not shop.user.id:
         return redirect('shop:shop_detail', shop.pk)
-    if reqeust.method == 'POST':
+    if request.method == 'POST':
         form = ShopForm(request.POST, instance = shop)
         if form.is_valid():
             shop = form.save(commit=False)
@@ -116,7 +116,7 @@ def review_new(request, shop_pk):
 @login_required
 def review_edit(request, shop_pk ,pk):
     review = get_object_or_404(Review, pk=pk)
-    if review.user is not request.user:
+    if review.user.id is not request.user.id:
         return redirect('shop:shop_detail', shop_pk)
     if request.method == 'POST':
         form = ReviewForm(request.POST, instance=review)
@@ -143,7 +143,7 @@ def category_delete(request, pk):
 @login_required
 def shop_delete(request, pk):
     shop = get_object_or_404(Shop, pk=pk)
-    if shop.user is not reqeust.user:
+    if shop.user.id is not reqeust.user.id:
         return redirect('shop:index')
     shop.delete()
     shop.save()
@@ -152,7 +152,7 @@ def shop_delete(request, pk):
 @login_required
 def review_delete(request, shop_pk, pk):
     review = get_object_or_404(Review, pk=pk)
-    if review.user is not request.user:
+    if review.user.id is not request.user.id:
         return redirect('shop:index')
     review.delete()
     review.save()
