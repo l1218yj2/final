@@ -124,8 +124,9 @@ def review_edit(request, shop_pk ,pk):
             review = form.save(commit=False)
             review.shop = get_object_or_404(Shop, pk = shop_pk)
             review.upser = request.user
+            review.save()
             messages.success(request, 'you edited a review')
-            return redirct('shop:shop_detail',shop_pk)
+            return redirect('shop:shop_detail',shop_pk)
     else:
         form = ReviewForm(instance=review)
     return render(request, 'review_form.html',{
@@ -137,23 +138,21 @@ def review_edit(request, shop_pk ,pk):
 def category_delete(request, pk):
     category = get_object_or_404(Category, pk=pk)
     category.delete()
-    category.save()
     return redirect('shop:index')
 
 @login_required
 def shop_delete(request, pk):
     shop = get_object_or_404(Shop, pk=pk)
-    if shop.user.id is not reqeust.user.id:
+    if shop.user.id is not request.user.id:
         return redirect('shop:index')
     shop.delete()
-    shop.save()
     return redirect('shop:index')
 
 @login_required
 def review_delete(request, shop_pk, pk):
     review = get_object_or_404(Review, pk=pk)
     if review.user.id is not request.user.id:
+        messages.info(request, 'you dont have permission')
         return redirect('shop:index')
     review.delete()
-    review.save()
     return redirect('shop:shop_detail', shop_pk)
