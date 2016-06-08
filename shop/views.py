@@ -89,16 +89,16 @@ def shop_detail(request, pk):
     })
 
 @login_required
-def review_new(reqeust, pk):
+def review_new(reqeust, shop_pk):
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
             review = form.save(commit=False)
-            review.shop = get_object_or_404(Shop, pk=pk)
+            review.shop = get_object_or_404(Shop, pk=shop_pk)
             review.user = request.user
             review.save()
             message.succes(reqeust, 'you make a new review')
-            return redirect('shop:shop_detail', pk)
+            return redirect('shop:shop_detail', shop_pk)
     else:
         form = ReviewForm()
     return render(request, 'review_form.html', {
@@ -133,7 +133,7 @@ def shop_delete(request, pk):
     shop.delete()
     return redirect('shop:index')
 
-def review_delete(request, pk):
+def review_delete(request, shop_pk, pk):
     review = get_object_or_404(Review, pk=pk)
     review.delete()
-    return redirect('shop:index')
+    return redirect('shop:shop_detail', shop_pk)
