@@ -6,6 +6,9 @@ class Category(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.title
+
 class Shop(models.Model):
     category = models.ForeignKey(Category, related_name='shops')
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -19,6 +22,9 @@ class Shop(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.name
+
 class Review(models.Model):
     shop = models.ForeignKey(Shop, related_name='reviews')
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -26,3 +32,6 @@ class Review(models.Model):
     photo = models.ImageField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.message
