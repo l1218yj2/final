@@ -14,4 +14,4 @@ class ShopForm(forms.ModelForm):
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ['shop', 'message', 'photo']
+        fields = ['message', 'photo']

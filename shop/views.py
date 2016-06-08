@@ -89,7 +89,7 @@ def shop_detail(request, pk):
     })
 
 @login_required
-def review_new(reqeust, shop_pk):
+def review_new(request, shop_pk):
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
@@ -106,7 +106,7 @@ def review_new(reqeust, shop_pk):
     })
 
 @login_required
-def review_edit(reques, shop_pk ,pk):
+def review_edit(request, shop_pk ,pk):
     review = get_object_or_404(Review, pk=pk)
 
     if request.method == 'POST':
@@ -114,7 +114,7 @@ def review_edit(reques, shop_pk ,pk):
         if form.is_valid():
             review = form.save(commit=False)
             review.shop = get_object_or_404(Shop, pk = shop_pk)
-            review.user = request.user
+            review.upser = request.user
             messages.success(request, 'you edited a review')
             return redirct('shop:shop_detail',shop_pk)
     else:

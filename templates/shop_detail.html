@@ -1,10 +1,39 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="row">
+<div class="row">
+    category: {{shop.category.title}}
+    <br/>
+    user: {{shop.user}}
+    <br/>
+    name: {{shop.name}}
+    <br/>
+    phone: {{shop.phone}}
+    <br/>
+    location: {{shop.loaction}}
+    <br/>
+    description: {{shop.description}}
+    <br/>
+    created_at:{{shop.created_at}}
+    <br/>
+    updated_at:{{shop.updated_at}}
+    <br/>
+    <img src="{{ shop.photo_1.url}}"/>
+    {% if shop.photo_2 %}<img src="{{ shop.photo_2.url}}"> {% endif %}
+    {% if shop.photo_3 %}<img src="{{ shop.photo_3.url}}"> {% endif %}
+    <br/>
+    <a href="{% url "shop:review_new" shop.pk %}">
+        post a new review
+    </a>
         {% for review in shop.reviews.all %}
         <div class="col-sm-4">
             {{ review.message}}
+            <a href="{% url "shop:review_edit" shop.pk review.pk %}">
+                edit
+            </a>
+            <a href="{% url "shop:review_delete" shop.pk review.pk %}">
+                delete
+            </a>
         </div>
         {% endfor %}
     </div>
