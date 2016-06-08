@@ -35,7 +35,7 @@ def category_edit(request, pk):
         if form.is_valid():
             category = form.save(commit=False)
             category.save()
-            message.success(request, 'you edited a cantegory.')
+            messages.success(request, 'you edited a cantegory.')
             return redirect('shop:category_detail', pk)
 
     else:
@@ -57,7 +57,7 @@ def shop_new(request):
             shop = form.sae(commit=False)
             shop.user = request.user
             shop.save()
-            message.success('you made a new shop.')
+            messages.success('you made a new shop.')
             return redirect('shop:shop_detail', shop.pk)
     else:
         form = ShopForm()
@@ -97,7 +97,7 @@ def review_new(reqeust, shop_pk):
             review.shop = get_object_or_404(Shop, pk=shop_pk)
             review.user = request.user
             review.save()
-            message.succes(reqeust, 'you make a new review')
+            messages.succes(reqeust, 'you make a new review')
             return redirect('shop:shop_detail', shop_pk)
     else:
         form = ReviewForm()
