@@ -33,10 +33,19 @@
             </div>
         </div>
         {% endfor %}
-        {% for review in reviews %}
+        {% for review in review_list %}
         <div class="col-sm-3">
-            <p>review.message</p>
+            <p>{{review.message}}</p>
         </div>
         {% endfor %}
+        <div>
+            <a href="{% url "shop:shop_new" %}">
+                new shop
+            </a>
+            <a href="{% url "shop:category_new" %}">
+                new category
+            </a>
+        </div>
+
     </div>
 {% endblock %}
