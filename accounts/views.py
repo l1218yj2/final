@@ -10,6 +10,6 @@ def signup(request):
             return redirect(settings.LOGIN_URL)
     else:
         form = UserCreationForm()
-    return render(request, 'accounts/signup_form.html', {
+    return render(request, 'signup_form.html', {
         'form': form,
     })
