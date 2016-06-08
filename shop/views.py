@@ -35,11 +35,11 @@ def category_edit(request, pk):
         if form.is_valid():
             category = form.save(commit=False)
             category.save()
-            message.success(request, 'you edited a category.')
+            message.success(request, 'you edited a cantegory.')
             return redirect('shop:category_detail', pk)
 
     else:
-        form = CategoryForm(instace = category)
+        form = CategoryForm(instance = category)
     return render(request, 'category_form.html', {
         'form':form,
     })

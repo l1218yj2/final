@@ -3,12 +3,39 @@
 {% block content %}
     <div class="row">
         {% for category in category_list %}
-        <div class="col-sm-4">
+        <div class="col-sm-6">
             <div class="caption">
                 <a href="{% url "shop:category_detail" category.pk %}">
                     {{ category.title }}
                 </a>
+                <a href="{% url "shop:category_edit" category.pk %}">
+                    <p>edit</p>
+                </a>
+                <a href="{% url "shop:category_delete" category.pk %}">
+                    <p>delete</p>
+                </a>
+                <br/>
+                <div class = "row">
+                    {% for shop in category.shops.all %}
+                    <div class="col-sm-6">
+                        <a href="{% url "shop:shop_detail" shop.pk %}">
+                            {{ shop.name}}
+                        </a>
+                        <a href="{% url "shop:shop_edit" shop.pk %}">
+                            <p>edit</p>
+                        </a>
+                        <a href="{% url "shop:shop_delete" shop.pk %}">
+                            <p>delete</p>
+                        </a>
+                        </div>
+                    {% endfor %}
+                    </div>
             </div>
+        </div>
+        {% endfor %}
+        {% for review in reviews %}
+        <div class="col-sm-3">
+            <p>review.message</p>
         </div>
         {% endfor %}
     </div>

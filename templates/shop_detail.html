@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="row">
-        {% for review in shop.reviews %}
+        {% for review in shop.reviews.all %}
         <div class="col-sm-4">
             {{ review.message}}
         </div>

@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="row">
-        {% for shop in category.shops %}
+        {% for shop in category.shops.all %}
         <div class="col-sm-4">
             <div class="caption">
                 <a href="{% url "shop:shop_detail" shop.pk %}">
